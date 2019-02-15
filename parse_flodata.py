@@ -15,7 +15,7 @@ def isTransfer(text):
 
 
 def isIncorp(text):
-    wordlist = ['incorporate','create','start'] # keep everything lowercase
+    wordlist = ['incorporate','create','start', 'begin'] # keep everything lowercase
     textList = text.split(' ')
     for word in wordlist:
         if word in textList:
