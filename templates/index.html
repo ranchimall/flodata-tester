@@ -25,6 +25,9 @@
         <p>marker : {{ parsed_data['marker'] }}</p>
         <p>initTokens : {{ parsed_data['initTokens'] }}</p>
     {% endif %}
+    {% if parsed_data['type'] == 'noise' %}
+        <p>type : {{ parsed_data['type'] }}</p>
+    {% endif %}
 {% endif %}
 ------------------
 <form action="" method="post" name="reporterror">

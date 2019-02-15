@@ -22,6 +22,15 @@ def isIncorp(text):
             return True
     return False
 
+
+def extractMarker(text):
+    textList = text.split(' ')
+    for word in textList:
+        if word[-1] == '#':
+            return word
+    return False
+
+
 def extractOperation(text):
     operationList = ['send', 'transfer', 'give'] # keep everything lowercase
     count = 0
@@ -53,14 +62,6 @@ def extractAmount(text):
             return 'Too many'
     return returnval
 
-
-def extractMarker(text):
-    textList = text.split(' ')
-    for word in textList:
-        if word[-1] == '#':
-            return word
-    return False
-
 def extractInitTokens(text):
     base_units = {'thousand':10**3 , 'million':10**6 ,'billion':10**9, 'trillion':10**12}
     textList = text.split(' ')
@@ -91,7 +92,7 @@ def parse_flodata(string):
                        'amount': amount}
     elif isIncorp(cleanstring):
         incMarker = extractMarker(cleanstring)
-        initTokens = extractAmount(cleanstring)
+        initTokens = extractInitTokens(cleanstring)
         parsed_data = {'type': 'incorporation', 'flodata': string, 'marker': incMarker, 'initTokens': initTokens}
     else:
         parsed_data = {'type': 'noise'}
