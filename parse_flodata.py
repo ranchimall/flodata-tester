@@ -66,11 +66,15 @@ def extractInitTokens(text):
     base_units = {'thousand':10**3 , 'million':10**6 ,'billion':10**9, 'trillion':10**12}
     textList = text.split(' ')
     for idx,word in enumerate(textList):
+        for unit in base_units:
+            temp = word.split(unit)
+            if len(temp)==2 and temp[1]=='':
+                return float(temp[0])*base_units[unit]
         try:
             result = float(word)
             if textList[idx+1] in base_units:
                 return result*base_units[textList[idx+1]]
-            return res
+            return result
         except:
             continue
 
