@@ -1,0 +1,41 @@
+<html>
+<body>
+
+<h1>Incorporation and Transfer comment tester</h1>
+<form action="" method="post" name="input">
+      {{ form.hidden_tag() }}
+      <p>
+          Enter FLO data:<br>
+          {{ form.flodata(size=80) }}<br>
+      </p>
+      <p><input type="submit" value="Parse"></p>
+  </form>
+
+{% if parsed_data %}
+    {% if parsed_data['type'] == 'transfer' %}
+        <p>type : {{ parsed_data['type'] }}</p>
+        <p>flodata : {{ parsed_data['flodata'] }}</p>
+        <p>marker : {{ parsed_data['marker'] }}</p>
+        <p>operation : {{ parsed_data['operation'] }}</p>
+        <p>amount : {{ parsed_data['amount'] }}</p>
+    {% endif %}
+    {% if parsed_data['type'] == 'incorporation' %}
+        <p>type : {{ parsed_data['type'] }}</p>
+        <p>flodata : {{ parsed_data['flodata'] }}</p>
+        <p>marker : {{ parsed_data['marker'] }}</p>
+        <p>initTokens : {{ parsed_data['initTokens'] }}</p>
+    {% endif %}
+{% endif %}
+------------------
+<form action="" method="post" name="reporterror">
+      {{ form.hidden_tag() }}
+      Ps - If you find an anamoly, please report the error below
+      <p>
+          Comments on the error:<br>
+          {{ errorform.comments(cols="35", rows="10") }}<br>
+      </p>
+      <p><input type="submit" value="Report error"></p>
+</form>
+
+</body>
+</html>
