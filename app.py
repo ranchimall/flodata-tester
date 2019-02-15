@@ -4,7 +4,7 @@ from flask_wtf import Form
 from wtforms import StringField
 from wtforms.validators import DataRequired
 from wtforms.widgets import TextArea
-import parse_incorp
+import parse_flodata
 import sqlite3
 
 class MyForm(Form):
@@ -27,18 +27,16 @@ def textparse():
     errorform = ReportError()
 
     if form.validate_on_submit():
-        g.parsed_data = parse_incorp.parse_flodata(form.flodata.data)
-        return render_template('index.html', form=form, parsed_data= g.parsed_data, errorform=errorform)
+        parsed_data = parse_flodata.parse_flodata(form.flodata.data)
+        return render_template('index.html', form=form, parsed_data= parsed_data, errorform=errorform)
 
     if errorform.validate_on_submit():
-        #conn = sqlite3.connect('test.db')
-        #sqlquery = 'INSERT INTO errorlogs (flodata, comments) VALUES ({},{})'.format( g.parsed_data['flodata'], errorform.comments.data)
-        #conn.execute(sqlquery)
-        print(g.parsed_data)
-        #conn.close()
-        return render_template('index.html', form=form, parsed_data= g.parsed_data, errorform=errorform)
+        conn = sqlite3.connect('test.db')
+        sqlquery = 'INSERT INTO errorlogs (flodata, comments) VALUES ({},{})'.format( g.parsed_data['flodata'], errorform.comments.data)
+        conn.execute(sqlquery)
+        conn.close()
+        return render_template('index.html', form=form, parsed_data= parsed_data, errorform=errorform)
 
     return render_template('index.html', form=form, errorform=errorform)
 
 app.run(debug=True)
-
